@@ -38,7 +38,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/ext_functions.php",
+            "app/Constants/EXAMPLE_CONST.php",
             "app/Helpers/helpers.php"
         ]
     },
