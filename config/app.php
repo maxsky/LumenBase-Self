@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Shanghai'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'zh-CN'),
+    'locale' => env('APP_LOCALE', 'zh_CN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -113,6 +113,7 @@ return [
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'File' => Illuminate\Support\Facades\File::class,
-        // 'Mail' => Illuminate\Support\Facades\Mail::class,
+        'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Mail' => Illuminate\Support\Facades\Mail::class,
     ]
 ];

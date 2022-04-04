@@ -2,22 +2,11 @@
 
 namespace App\Providers;
 
-use App\User;
-use Illuminate\Auth\AuthManager as Auth;
+use App\Services\User\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider {
-
-    private Auth $auth;
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register() {
-        $this->auth = $this->app['auth'];
-    }
 
     /**
      * Boot the authentication services for the application.
@@ -30,9 +19,16 @@ class AuthServiceProvider extends ServiceProvider {
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        $this->auth->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+        $this->app['auth']->viaRequest('api', function (Request $request) {
+            // get token
+            $token = $request->bearerToken();
+
+            // TODO: token verify
+
+            $tokenVerified = ['user_id' => 123];
+
+            if ($tokenVerified) {
+                return app(UserService::class)->getUserById($tokenVerified['user_id']);
             }
 
             return null;

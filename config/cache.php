@@ -43,7 +43,7 @@ return [
         'database' => [
             'driver' => 'database',
             'table' => env('CACHE_DATABASE_TABLE', 'cache'),
-            'connection' => env('CACHE_DATABASE_CONNECTION', null),
+            'connection' => env('CACHE_DATABASE_CONNECTION'),
         ],
 
         'file' => [
@@ -90,7 +90,7 @@ return [
 
     'prefix' => env(
         'CACHE_PREFIX',
-        Str::slug(env('APP_NAME', 'Lumen'), '_').'_cache'
+        Str::slug(env('APP_NAME', 'lumen'), '_').'_cache'
     ),
 
 ];

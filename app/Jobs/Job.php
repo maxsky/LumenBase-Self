@@ -4,11 +4,10 @@ namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\{InteractsWithQueue, SerializesModels};
+use Illuminate\Queue\Jobs\{Job as BaseJob, JobName};
 
-abstract class Job implements ShouldQueue
-{
+abstract class Job implements ShouldQueue {
     /*
     |--------------------------------------------------------------------------
     | Queueable Jobs
@@ -21,4 +20,24 @@ abstract class Job implements ShouldQueue
     */
 
     use InteractsWithQueue, Queueable, SerializesModels;
+
+    /** @var mixed */
+    protected mixed $data;
+
+    /**
+     * @param BaseJob $job
+     * @param mixed   $data
+     */
+    public function fire(BaseJob $job, mixed $data = null) {
+        $payload = $job->payload();
+
+        $class = JobName::resolve($payload['job'], $payload);
+
+        $jobClass = new $class();
+
+        $jobClass->job = $job;
+        $jobClass->data = $data;
+
+        $jobClass->handle();
+    }
 }

@@ -6,6 +6,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+date_default_timezone_set(env('APP_TIMEZONE', 'Asia/Shanghai'));
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -36,9 +38,7 @@ foreach (read_dir_queue(base_path('config')) as $config) {
     $app->configure($config);
 }
 
-$app->configure('app');
-
-$app->withFacades(true, array_flip(config('app.aliases')));
+$app->withFacades();
 
 $app->withEloquent();
 
@@ -75,12 +75,17 @@ $app->singleton(
 */
 
 $app->middleware([
+    // global
     App\Http\Middleware\TrimStrings::class,
+    App\Http\Middleware\TrimResponseData::class,
+    App\Http\Middleware\ResponseHeader::class,
 ]);
 
-//$app->routeMiddleware([
-//    'auth' => App\Http\Middleware\Route\Authenticate::class,
-//]);
+$app->routeMiddleware([
+    // route
+    'auth' => App\Http\Middleware\Route\Authenticate::class,
+    'throttle' => App\Http\Middleware\Route\ThrottleRequests::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +100,7 @@ $app->middleware([
 
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\BroadcastServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
 /*
@@ -108,9 +114,10 @@ $app->register(App\Providers\EventServiceProvider::class);
 |
 */
 
-/**
- * Load Dingo API router.
- */
-require_once __DIR__ . '/router.php';
+$app->router->group([
+    'namespace' => 'App\Http\Controllers',
+], function (/** @noinspection PhpUnusedParameterInspection */ $router) {
+    require_once __DIR__ . '/../routes/api.php';
+});
 
 return $app;

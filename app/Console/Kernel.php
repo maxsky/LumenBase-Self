@@ -4,7 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\KeyGenerateCommand;
 use Illuminate\Console\Scheduling\Schedule;
-use JK\Dingo\Api\Console\Commands\RouteListCommand;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel {
@@ -15,7 +14,6 @@ class Kernel extends ConsoleKernel {
      */
     protected $commands = [
         KeyGenerateCommand::class,
-        RouteListCommand::class,
     ];
 
     /**

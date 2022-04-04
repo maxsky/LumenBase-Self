@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -51,17 +53,8 @@ return [
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => env('DB_PREFIX', ''),
             'strict' => env('DB_STRICT_MODE', true),
-            'engine' => env('DB_ENGINE', null),
+            'engine' => env('DB_ENGINE'),
             'timezone' => env('DB_TIMEZONE', '+08:00'),
-            'modes' => [
-                'ERROR_FOR_DIVISION_BY_ZERO',
-                'NO_AUTO_CREATE_USER',
-                'NO_ENGINE_SUBSTITUTION',
-                'NO_ZERO_DATE',
-                'NO_ZERO_IN_DATE',
-                'STRICT_TRANS_TABLES',
-                // 'ONLY_FULL_GROUP_BY'
-            ],
         ],
 
         'pgsql' => [
@@ -73,7 +66,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => env('DB_PREFIX', ''),
-            'schema' => env('DB_SCHEMA', 'public'),
+            'search_path' => env('DB_SCHEMA', 'public'),
             'sslmode' => env('DB_SSL_MODE', 'prefer'),
         ],
 
@@ -118,22 +111,37 @@ return [
 
         'client' => env('REDIS_CLIENT', 'phpredis'),
 
-        'cluster' => env('REDIS_CLUSTER', false),
+        'options' => [
+            'cluster' => env('REDIS_CLUSTER', 'redis'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'lumen'), '_') . '_database_'),
+            //'serializer' => Redis::SERIALIZER_IGBINARY, // PHP for Windows maybe invalid
+            //'compression' => Redis::COMPRESSION_ZSTD, // PHP for Windows maybe invalid
+            //'compression_level' => Redis::COMPRESSION_ZSTD_DEFAULT // PHP for Windows maybe invalid
+        ],
+
+        'default' => [
+            'url' => env('REDIS_URL'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD'),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('REDIS_DB', '0'),
+        ],
 
         'cache' => [
+            'url' => env('REDIS_URL'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', 6379),
-            'database' => env('REDIS_DB', 0),
+            'password' => env('REDIS_PASSWORD'),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
-        'queue' => [
+        'broadcast' => [
+            'url' => env('REDIS_URL'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', 6379),
-            'database' => env('REDIS_CACHE_DB', 1),
-        ],
-
+            'password' => env('REDIS_PASSWORD'),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('REDIS_BROADCAST_DB', '2'),
+        ]
     ],
 
 ];

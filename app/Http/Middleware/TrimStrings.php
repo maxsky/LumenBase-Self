@@ -4,23 +4,23 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
-class TrimStrings {
+class TrimStrings extends TransformsRequest {
 
     /**
-     * The additional attributes passed to the middleware.
+     * All of the registered skip callbacks.
+     *
+     * @var array
      */
-    protected array $attributes = [
-
-    ];
+    protected static array $skipCallbacks = [];
 
     /**
      * The attributes that should not be trimmed.
+     *
+     * @var array
      */
     protected array $except = [
-        'password',
-        'password_confirmation'
+        //
     ];
 
     /**
@@ -29,88 +29,42 @@ class TrimStrings {
      * @param Request $request
      * @param Closure $next
      *
-     * @param array   $attributes
-     *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, ...$attributes) {
-        $this->attributes = $attributes;
-
-        $this->clean($request);
-
-        return $next($request);
-    }
-
-    /**
-     * Clean the request's data.
-     *
-     * @param Request $request
-     *
-     * @return void
-     */
-    protected function clean(Request $request) {
-        $this->cleanParameterBag($request->query);
-
-        if ($request->isJson()) {
-            $this->cleanParameterBag($request->json());
-        } else {
-            $this->cleanParameterBag($request->request);
-        }
-    }
-
-    /**
-     * Clean the data in the parameter bag.
-     *
-     * @param ParameterBag $bag
-     *
-     * @return void
-     */
-    protected function cleanParameterBag(ParameterBag $bag) {
-        $bag->replace($this->cleanArray($bag->all()));
-    }
-
-    /**
-     * Clean the data in the given array.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function cleanArray(array $data): array {
-        return collect($data)->map(function ($value, $key) {
-            return $this->cleanValue($key, $value);
-        })->all();
-    }
-
-    /**
-     * Clean the given value.
-     *
-     * @param string       $key
-     * @param array|string $value
-     *
-     * @return array|string
-     */
-    protected function cleanValue(string $key, $value) {
-        if (is_array($value)) {
-            return $this->cleanArray($value);
+    public function handle(Request $request, Closure $next): mixed {
+        foreach (static::$skipCallbacks as $callback) {
+            if ($callback($request)) {
+                return $next($request);
+            }
         }
 
-        return $this->transform($key, $value);
+        return parent::handle($request, $next);
     }
 
     /**
      * Transform the given value.
      *
-     * @param string       $key
-     * @param array|string $value
+     * @param string $key
+     * @param mixed  $value
      *
-     * @return array|string
+     * @return mixed
      */
-    protected function transform(string $key, $value) {
+    protected function transform(string $key, mixed $value): mixed {
         if (in_array($key, $this->except, true)) {
             return $value;
         }
 
-        return is_string($value) ? trim($value) : $value;
+        return is_string($value) ? preg_replace('~^\s+|\s+$~iu', '', $value) : $value;
+    }
+
+    /**
+     * Register a callback that instructs the middleware to be skipped.
+     *
+     * @param Closure $callback
+     *
+     * @return void
+     */
+    public static function skipWhen(Closure $callback) {
+        static::$skipCallbacks[] = $callback;
     }
 }
