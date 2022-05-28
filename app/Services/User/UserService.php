@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: Max Sky
- * Date: 4/4/2022
- * Time: 4:48 PM
- */
-
 namespace App\Services\User;
 
 use App\Models\Entities\User\User;

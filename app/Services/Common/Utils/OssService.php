@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: Max Sky
- * Date: 6/24/2020
- * Time: 5:50 PM
- */
-
 namespace App\Services\Common\Utils;
 
 use App\Services\Common\Utils\Traits\OssServiceTrait;
