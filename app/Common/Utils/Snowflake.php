@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: maxsky
- * Date: 2020/3/25
- * Time: 20:50
- */
-
 namespace App\Common\Utils;
 
 use Exception;

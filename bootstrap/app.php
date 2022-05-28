@@ -38,7 +38,7 @@ foreach (read_dir_queue(base_path('config')) as $config) {
     $app->configure($config);
 }
 
-$app->withFacades();
+$app->withFacades(true, array_flip(config('app.aliases')));
 
 $app->withEloquent();
 

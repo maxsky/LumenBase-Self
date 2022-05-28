@@ -16,9 +16,11 @@ class ResponseHeader {
     public function handle(Request $request, Closure $next): mixed {
         $response = $next($request);
 
-        $attrs = $request->attributes;
+        $attrs = $request->attributes->all();
 
-        $response->withHeaders($attrs->all());
+        if ($attrs) {
+            $response->withHeaders($attrs);
+        }
 
         return $response;
     }

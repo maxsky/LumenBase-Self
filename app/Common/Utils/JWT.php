@@ -42,7 +42,7 @@ class JWT {
     public function __construct() {
         $this->payload = [
             'aud' => null,
-            'iss' => 'bf0c8e7e6907c41b', // EveryoneFirmOffer-APP-API
+            'iss' => '1a294f40812c9a36', // LumenProject-API
             'sub' => null,
             'jti' => null,
             'src' => null,
@@ -52,13 +52,25 @@ class JWT {
         ];
     }
 
+    /**
+     * @param string $private_key
+     *
+     * @return JWT
+     */
     public function setPrivateKey(string $private_key): JWT {
         $this->priKey = $private_key;
+
         return $this;
     }
 
+    /**
+     * @param string $public_key
+     *
+     * @return JWT
+     */
     public function setPublicKey(string $public_key): JWT {
         $this->pubKey = $public_key;
+
         return $this;
     }
 

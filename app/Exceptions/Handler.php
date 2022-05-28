@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\{Exceptions\ThrottleRequestsException, JsonResponse, Request, Response};
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use RedisException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,7 +39,7 @@ class Handler extends ExceptionHandler {
      *
      * @throws Exception
      */
-    public function report(Throwable $e) {
+    public function report(Throwable $e): void {
         parent::report($e);
     }
 
@@ -48,11 +49,11 @@ class Handler extends ExceptionHandler {
      * @param Request   $request
      * @param Throwable $e
      *
+     * @return JsonResponse|Response
      *
-     * @return Response|JsonResponse
      * @throws Throwable
      */
-    public function render($request, Throwable $e): Response|JsonResponse {
+    public function render($request, Throwable $e): JsonResponse|Response {
         // 404 & 405
         if ($e instanceof NotFoundHttpException | $e instanceof MethodNotAllowedHttpException) {
             return response()->json([
@@ -73,6 +74,19 @@ class Handler extends ExceptionHandler {
         if ($e instanceof ValidationException) {
             return failed(getFirstInvalidMsg($e->errors()), 400);
         }
+
+        if ($e instanceof RedisException) {
+            return failed('系统缓存服务异常', 500);
+        }
+
+        // base message
+        if ($e instanceof BaseMessageException) {
+            return failed($e->getMessage(), $e->getCode());
+        }
+
+        //if ($e instanceof ContainerExceptionInterface) {
+        //    return failed('请求失败，请重试', 400);
+        //}
 
         return parent::render($request, $e);
     }

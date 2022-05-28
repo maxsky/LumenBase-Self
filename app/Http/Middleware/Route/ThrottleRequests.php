@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: Max Sky
- * Date: 2/22/2022
- * Time: 8:03 PM
- */
-
 namespace App\Http\Middleware\Route;
 
 use Closure;

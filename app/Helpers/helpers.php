@@ -68,7 +68,8 @@ if (!function_exists('getFileMimeType')) {
      *
      * @return false|string
      */
-    function getFileMimeType(string $contents, bool $is_path = true, bool $full_type = false, bool $include_dot = true): bool|string {
+    function getFileMimeType(string $contents,
+                             bool $is_path = true, bool $full_type = false, bool $include_dot = true): bool|string {
         if (!$is_path) {
             $temp = tmpfile();
             fwrite($temp, $contents);
@@ -81,6 +82,23 @@ if (!function_exists('getFileMimeType')) {
         }
 
         return image_type_to_extension(exif_imagetype($contents), $include_dot);
+    }
+}
+
+if (!function_exists('getFileType')) {
+    /**
+     * @param Illuminate\Http\UploadedFile|string $file uploaded file object or file path
+     *
+     * @return false|string
+     */
+    function getFileType(Illuminate\Http\UploadedFile|string $file): bool|string {
+        if (is_string($file)) {
+            $mime = mime_content_type($file) ?: '';
+
+            return current(explode('/', $mime));
+        }
+
+        return current(explode('/', $file->getMimeType() ?: ''));
     }
 }
 
@@ -122,11 +140,12 @@ if (!function_exists('ex_str_rand')) {
      *
      * @param int    $length 长度，默认 16
      * @param string $prefix 前缀，默认为空字符串。前缀不影响随机长度
+     * @param string $suffix 后缀，默认为空字符串。后缀不影响随机长度
      *
      * @return string
      */
-    function ex_str_rand(int $length = 16, string $prefix = ''): string {
-        return $prefix . Illuminate\Support\Str::random($length);
+    function ex_str_rand(int $length = 16, string $prefix = '', string $suffix = ''): string {
+        return $prefix . Illuminate\Support\Str::random($length) . $suffix;
     }
 }
 

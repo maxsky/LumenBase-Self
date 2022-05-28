@@ -29,7 +29,7 @@ class TransformsRequest {
      *
      * @return void
      */
-    protected function clean(Request $request) {
+    protected function clean(Request $request): void {
         $this->cleanParameterBag($request->query);
 
         if ($request->isJson()) {
@@ -46,7 +46,7 @@ class TransformsRequest {
      *
      * @return void
      */
-    protected function cleanParameterBag(ParameterBag $bag) {
+    protected function cleanParameterBag(ParameterBag $bag): void {
         $bag->replace($this->cleanArray($bag->all()));
     }
 

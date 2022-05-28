@@ -1,9 +1,11 @@
-/vendor
 /.idea
+/_*/
+/vendor
 Homestead.json
 Homestead.yaml
 .env
-.phpunit.result.cache
-composer.lock
-_ide_helper.php
 .phpstorm.meta.php
+.phpunit.*
+_ide_helper.php
+composer.lock
+laravel-echo-server.lock

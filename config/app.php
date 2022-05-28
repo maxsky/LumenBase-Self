@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -114,6 +114,8 @@ return [
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Http' => Illuminate\Support\Facades\Http::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ]
 ];

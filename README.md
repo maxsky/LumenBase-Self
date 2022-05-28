@@ -35,6 +35,15 @@
 | Model/Logic     | 数据逻辑目录，实现数据 ORM 相关操作   |                                                                           |
 | Services        | 业务逻辑服务                 | 按版本划分，调用数据逻辑类通过 **依赖注入** 实现实例化。服务之间调用通过内置方法 `app(ClassName::class)` 实现实例化 |
 
+## 密钥生成
+
+将生成的密钥放置于 `storage/app` 目录下
+
+```shell
+openssl ecparam -genkey -name prime256v1 -out ecc_pri_key.pem
+openssl ec -in ecc_pri_key.pem -pubout -out ecc_pub_key.pem
+```
+
 ## 请求调试
 
 ### 请求头

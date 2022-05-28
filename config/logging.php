@@ -48,6 +48,41 @@ return [
     */
 
     'channels' => [
+        'ali' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/ali/ali.log'),
+            'level' => 'info',
+            'days' => 30
+        ],
+
+        'db' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/db/db.log'),
+            'level' => 'info',
+            'days' => 30
+        ],
+
+        'email' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/email/email.log'),
+            'level' => 'warning',
+            'days' => 30
+        ],
+
+        'job' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/job/job.log'),
+            'level' => 'info',
+            'days' => 30
+        ],
+
+        'wechat' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/wechat/wechat.log'),
+            'level' => 'info',
+            'days' => 30
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
