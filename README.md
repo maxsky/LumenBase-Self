@@ -9,7 +9,8 @@
 | app          | 应用目录     |                                    |
 | bootstrap    | 应用启动相关文件 |                                    |
 | config       | 应用配置文件   |                                    |
-| resources    | 资源目录     | 多国语言、Blade 视图、XML 响应模板             |
+| lang         | 多国语言     |                                    |
+| resources    | 资源目录     | Blade 视图、XML 响应模板                  |
 | routes       | 路由文件     |                                    |
 | storage/app  | 应用存储目录   | 存储用于生成 JWT 的公私钥、微信证书等（**不加入版本控制**） |
 | storage/logs | 日志目录     | 错误、调试等日志位于日志根目录，其它日志按文件夹区分         |
@@ -37,7 +38,7 @@
 
 ## 密钥生成
 
-将生成的密钥放置于 `storage/app` 目录下
+默认使用 ECC，将生成的密钥放置于 `storage/app` 目录下
 
 ```shell
 openssl ecparam -genkey -name prime256v1 -out ecc_pri_key.pem
@@ -132,7 +133,8 @@ php artisan queue:work
 
 ### 数据实体
 
-所有数据实体位于 `app/Models/Entities` 并继承该目录下的 `Model`，用户模型需注意按示例实现 `AuthenticatableContract`、`AuthorizableContract`，并且引入 3 个 `trait`
+所有数据实体位于 `app/Models/Entities` 并继承该目录下的 `Model`，用户模型需注意按示例实现 `AuthenticatableContract`、`AuthorizableContract`，并且引入 3
+个 `trait`
 
 ### 数据逻辑
 
