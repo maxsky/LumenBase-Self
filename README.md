@@ -27,7 +27,7 @@
 | Events          | 事件类                    ||
 | Factories       | 工厂模式相关类                | 按需                                                                        |
 | Helpers         | 助手函数                   | 需加入到 Composer Autoload 中的 `files`                                         |
-| Http/Controller | 控制器                    | 智慧律所前台接口按版本划分，其它模块独立文件夹。控制器调用服务类通过 **依赖注入** 实现实例化                         |
+| Http/Controller | 控制器                    | 前台接口按版本划分，其它模块独立文件夹。控制器调用服务类通过 **依赖注入** 实现实例化                         |
 | Http/Middleware | 中间件，子目录 `Route` 为路由中间件 |                                                                           |
 | Jobs            | 队列类                    ||
 | Listeners       | 事件监听器                  ||
