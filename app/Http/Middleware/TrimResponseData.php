@@ -18,15 +18,15 @@ class TrimResponseData {
         $response = $next($request);
 
         if ($response instanceof JsonResponse) {
-            $response->setEncodingOptions(DEFAULT_JSON_ENCODING_OPTIONS);
+            $content = $response->getData(true);
 
-            $content = json_decode($response->getContent());
-
-            if (empty($content->data ?? null)) {
-                unset($content->data);
+            if (empty($content['data'] ?? null)) {
+                unset($content['data']);
 
                 $response->setData($content);
             }
+
+            $response->setEncodingOptions(DEFAULT_JSON_ENCODING_OPTIONS);
         }
 
         return $response;
