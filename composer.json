@@ -20,27 +20,27 @@
         "alibabacloud/client": "^1.5",
         "aliyuncs/oss-sdk-php": "^2.6",
         "dcat/laravel-wherehasin": "^0.8.0",
-        "firebase/php-jwt": "^6.3",
+        "firebase/php-jwt": "^6.4",
         "illuminate/broadcasting": "^9.0",
         "illuminate/mail": "^9.0",
         "illuminate/redis": "^9.0",
-        "kra8/laravel-snowflake": "^2.1",
+        "kra8/laravel-snowflake": "^2.2",
         "laravel/lumen-framework": "^9.0",
         "overtrue/laravel-lang": "^6.0",
         "phpseclib/phpseclib": "^3.0",
-        "propaganistas/laravel-phone": "^4.3",
+        "propaganistas/laravel-phone": "^4.4",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/image-optimizer": "^1.6",
         "wechatpay/wechatpay": "^1.4"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.12",
-        "fakerphp/faker": "^1.20",
-        "league/flysystem": "^3.2",
+        "barryvdh/laravel-ide-helper": "^2.13",
+        "fakerphp/faker": "^1.21",
+        "league/flysystem": "^3.0",
         "maxsky/lumen-app-key-generator": "^1.0",
         "mockery/mockery": "^1.5",
         "phpunit/phpunit": "^9.5",
-        "wnx/laravel-stats": "^2.9"
+        "wnx/laravel-stats": "^2.11"
     },
     "autoload": {
         "psr-4": {
